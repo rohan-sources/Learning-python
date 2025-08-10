@@ -1,2 +1,2 @@
 # Learning-python
-I am using this repo to keep my notes and practice sessions in python.
+I am using this repo to keep my notes and practice files in python.
