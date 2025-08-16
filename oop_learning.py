@@ -1,3 +1,5 @@
+import csv
+
 class Item():
     discounted_price=0.8 #class attribute
     all_items=[]
@@ -21,15 +23,24 @@ class Item():
     def apply_discount(self):
         self.price*=self.discounted_price # Here, simply saying discounted_price won't work and you will have to mention its object, If instance is mentioned, attribute is searched at instance level first then class level.
 
-    def __repr__(self):   # another magic method like __init__ to represent the coded version of the items as stored in all_items list
-        return f'item(\'{self.name}\', {self.price}, {self.quantity})'    # by convention, we represent as in the instance's format
+    def __repr__(self):   # another magic method like __init__ to represent the coded version of the items as stored in all_items list to an easier readable way
+        return f'Item(\'{self.name}\', {self.price}, {self.quantity})'    # by convention, we represent as in the instance's format
     
-item1=Item('Phone',100,90.0) #called instance or object of the class Item
- # here name, price and quantity are attribukttes of the object item1
-item1.calc_price() # here item1 in the beginning is the self argument, and x,y the price and quantity ones. but now, we have it all in the __init__ method
+    @classmethod
+    def instantiate_from_csv(cls):    # when we call our class method, the class object itself is the first argument as self object not the instance
+        with open("/mnt/c/Users/rohan/desktop/coding/python/git/Learning-python/items.csv", 'r') as fin:
+            reader=csv.DictReader(fin)  # gives a list as dictionaries
+            items=list(reader)
+            for item in items:
+                #print(item)
+                pass
 
-item2=Item('Laptop',1000,3) #called instance/object
-item2.has_numpad=False
+
+Item.instantiate_from_csv()
+
+ # here name, price and quantity are attributes of the object item1
+
+
 
 # here we see that every instance we define, we need to then input its name, price and quantity separately. this is annoying
 # we can define it all while defining the instance using __init__ also called constructor for classes where there are always some attributes with an instance
@@ -38,22 +49,26 @@ item2.has_numpad=False
 # for instance, here, inside the init method i said print i am created, so when the instance was defined, simulataneously, it printed i am created
 # also, we can add other parameters in the init method header and use it to define the name, price and quantity in it itself
 
-item3 = Item('Lamp', 500)
-item3.discounted_price=0.5
+
+#item3.discounted_price=0.5
 
 # now, till now we saw only instance attributes. now, we will see class attributes. these belong to the class and can be applied to instances too.
 
 Item.discounted_price # gives the discounted price of the whole class
-item1.discounted_price # gives the discounted price of item1 only, same as all. item1 doesn't find this attribute in the instance level and then went to class level
+#item1.discounted_price # gives the discounted price of item1 only, same as all. item1 doesn't find this attribute in the instance level and then went to class level
 
 dict_class=Item.__dict__ # gives all the attributes of the class at class level
-dict_item=item2.__dict__ # gives all the attributes of the instance at its level
+#dict_item=item2.__dict__ # gives all the attributes of the instance at its level
 
-item1.apply_discount() #applies the 80% discount to item1
+#item1.apply_discount() #applies the 80% discount to item1
 
-item3.apply_discount() #applies the 50% discount defined at instance level for item3
-
-for i in Item.all_items:
-    i.name # returns name of each item
+#item3.apply_discount() #applies the 50% discount defined at instance level for item3
 
 print(Item.all_items)
+
+# Until now, all our data regarding the items is stored in the python file along with all the other features. This is not a good approach.
+# Best is to store your data in a database. For simplicity, we will be using a csv file.
+# Inside our class, we can create a method to take data from the database or csv file so that we don't have to write our data in the python file.
+# This method is going to be a class method. Because, the whole class obtains data from the csv file to instantiate its values.
+# To make it a class method we use a decorator to make the method to a class method
+# Decorators in python is a way to change the behaviour of the funtion by calling them just before defining them.

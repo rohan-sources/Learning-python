@@ -1,0 +1,10 @@
+name, price, quantity
+'Phone',100,90.0
+'Laptop',1000,3
+'Lamp', 500, 0
+'Cable',10,5
+'Keyboard',75,5
+'Table',300,30
+'Chair',150.75,200
+'Book',200,1000
+'Pen',10,500
